@@ -1,0 +1,25 @@
+version: '3.3'
+
+volumes:
+  postgres_data: {}
+
+networks:
+  camunda_network:
+    driver: bridge
+    name: camunda_network
+
+services:
+  camunda:
+    image: camunda/camunda-bpm-platform:7.14.0
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./camunda-bpm-identity-keycloak-all-2.2.3.jar:/camunda/lib/camunda-bpm-identity-keycloak-all-2.2.3.jar
+      - ./bpm-platform.xml:/camunda/conf/bpm-platform.xml:ro
+      - ./web.xml:/camunda/webapps/camunda/WEB-INF/web.xml:ro
+      - ./keycloak.json:/camunda/webapps/camunda/WEB-INF/keycloak.json:ro
+      - ./keycloak.json:/camunda/webapps/engine-rest/WEB-INF/keycloak.json:ro
+    networks:
+      - camunda_network
+    environment:
+      - DEBUG=true

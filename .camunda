@@ -1,0 +1,8 @@
+DB_DRIVER=org.postgresql.Driver
+DB_URL=jdbc:postgresql://camunda_db:5433/postgres
+DB_USERNAME=debug
+DB_PASSWORD=debug
+
+WAIT_FOR=postgres:5433
+WAIT_FOR_TIMEOUT=30
+DEBUG=true
