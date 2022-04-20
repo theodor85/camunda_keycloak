@@ -1,0 +1,32 @@
+version: '3'
+
+volumes:
+  data: {}
+
+networks:
+  camunda_network:
+    external: true
+
+services:
+  postgres:
+    image: postgres:12.3
+    volumes:
+      - data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=password
+    networks:
+      - camunda_network
+  keycloak:
+    image: jboss/keycloak:latest
+    environment:
+      - DB_ADDR=postgres
+      - DB_USER=keycloak
+      - DB_PASSWORD=password
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+    ports:
+      - "8081:8080"
+    networks:
+      - camunda_network
